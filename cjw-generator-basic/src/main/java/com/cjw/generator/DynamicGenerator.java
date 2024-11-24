@@ -9,10 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DynamicGenerator {
 
@@ -56,7 +52,7 @@ public class DynamicGenerator {
 
         // 创建数据模型
         MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
-        mainTemplateConfig.setAuthor("yupi");
+        mainTemplateConfig.setAuthor("陈健武");
         mainTemplateConfig.setLoop(false);
         mainTemplateConfig.setOutputText("求和结果：");
 
