@@ -573,5 +573,51 @@ public class MainTemplateConfig {
 }
 ```
 
+## 动静结合 - 生成完整代码
 
+我们在 com.cjw.generator中新建一个MainGenerator 类 ,接收外层传来的数据模型(model)  
+完整代码如下:
+```
+package com.cjw.generator;
+
+import com.cjw.model.MainTemplateConfig;
+import freemarker.template.TemplateException;
+
+import java.io.File;
+import java.io.IOException;
+
+public class MainGenerator {
+    public static void main(String[] args) throws TemplateException, IOException {
+
+        //获取整个项目的根目录
+        String projectPath = System.getProperty("user.dir");
+
+        File parentFile = new File(projectPath);
+        //输入路径 : ACM示例代码模版目录
+        String inputPath = parentFile + File.separator + "cjw-generator-demo-projects" + File.separator + "acm-template";
+
+        //输出路径: 直接输出到项目的根目录
+        String outputPath = projectPath;
+
+        StaticGenerator.copyFilesByRecursive(inputPath, outputPath);
+
+
+        String dynamicInputPath = projectPath + File.separator + "cjw-generator-basic\\src\\main\\resources\\templates\\MainTemplate.java.ftl";
+        String dynamicOutputPath = projectPath + File.separator + "acm-template\\src\\com\\cjw\\acm\\MainTemplate.java";
+        MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
+        mainTemplateConfig.setAuthor("老陈");
+        mainTemplateConfig.setOutputText("我要输出啦");
+        mainTemplateConfig.setLoop(false);
+        DynamicGenerator.doGenerate(dynamicInputPath, dynamicOutputPath, mainTemplateConfig);
+
+    }
+}
+```
+
+执行上述代码,我们就生成了文件代码
+![img_7.png](img_7.png)
+
+核心思想就是 "挖坑"(编写模版文件) - > "填坑"(用户输入) 的过程  
+此时我们的本地代码生成器就完成了  
+需要注意的是 路径问题每个操作系统的写法不一样(作者的操作系统是Windows)
 
